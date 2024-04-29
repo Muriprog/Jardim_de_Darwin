@@ -1,0 +1,153 @@
+pergunta: (UFMG) Desenvolvida, há 150 anos, por Charles Darwin e Alfred Wallace, a ideia da seleção natural pode ser sustentada por observações científicas atuais.Assinale a alternativa que contém uma informação que NÃO é sustentada pela Teoria Evolutiva por Seleção Natural.
+alternativas:
+a) A reposição do fator de coagulação mediante transfusão de sangue aumenta a adaptabilidade dos hemofílicos.
+b) Certas bactérias, em face de mudanças no ambiente, adquirem a capacidade de produzir novas substâncias.
+c) O vírus HIV pode sofrer mutações, o que dificulta o tratamento de indivíduos soropositivos.
+d) Os peixes cegos apresentam menor chance de sobrevivência em ambientes iluminados.
+resposta: b) Certas bactérias, em face de mudanças no ambiente, adquirem a capacidade de produzir novas substâncias.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+pergunta: (UFRS) Embriões de vertebrados tendem a ser mais similares entre si do que os adultos correspondentes. Sobre esse fato, são feitas as seguintes afirmações.
+I - As analogias observadas indicam uma origem comum. 
+II - O estudo da embriologia comparada contribui para a compreensão da evolução biológica. 
+III - Durante o desenvolvimento embrionário, os organismos passam por fases que repetem 
+estágios adultos de seus ancestrais. 
+Assinale a alternativa correta
+alternativas: 
+a) Apenas I.
+b) Apenas II.
+c) Apenas III.
+d) Apenas I e III.
+e) I, II e III.
+resposta: b) Apenas II.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+pergunta: (UNB) - Alterada. Nos últimos anos, os Bálcãs têm sido agitados por uma série de conflitos étnicos, dos quais o mais recente foi a guerra no Kosovo. Os conflitos chamam a atenção, entre tantos outros aspectos, para a questão das etnias humanas, com base nas afirmações relacionadas a conceitos de evolução e genética de populações abaixo, assinale a alternativa correta. 
+(1) Antes dos atuais conflitos, na década de 80, a distribuição de genes na população da Iugoslávia seguia o equilíbrio de Hardy-Weinberg. 
+(2) Além do isolamento geográfico, aspectos culturais como os costumes e a religião influem na evolução das etnias humanas.
+(3) Os Bálcãs exemplificam bem que a migração aumenta a variabilidade genética.
+(4) É provável que a frequência de heterozigose seja semelhante na população brasileira e na população sérvia.
+alternativas: 
+F-V-F-F
+V-V-V-V
+V-V-F-V
+F-V-V-F
+resposta: F-V-F-F
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+Persunta: (URCA 2017/1) A seleção natural das espécies proposta por Charles Darwin no século XIX tem como base:
+
+A) 	
+A transmissão de caracteres adquiridos pelos progenitores aos seus descendentes.
+
+B) 	
+Mutações que degeneram os mais fracos e com isso esses são eliminados.
+
+C) 	
+Eventos catastróficos que dizimam populações inteiras permitindo o surgimento de novas espécies.
+
+D) 	
+A seleção dos mais aptos a um ambiente e a transmissão dessas características aos seus descendentes. resposta correta
+
+E) 	
+A vinda da vida de outros planetas através de meteoros e a posterior colonização do nosso planeta por esses seres.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+Pergunta: (UFPR 2018 - C. Gerais) Um grupo de roedores é separado pelo surgimento de um rio. Ao longo do tempo, os roedores ao norte do rio tornam-se brancos, enquanto os roedores ao sul do rio tornam-se castanhos. Nesse caso, é correto afirmar que a seleção natural:
+
+A) 	
+gera mutações específicas para os ambientes ao norte e ao sul do rio.
+
+B) 	
+promove a competição entre roedores brancos e castanhos.
+
+C) 	
+aumenta a probabilidade de sobrevivência apenas dos roedores brancos.
+
+D) 	
+promove a cooperação entre roedores brancos e castanhos.
+
+E) 	
+favorece diferentes fenótipos ao norte e ao sul do rio. resposta correta
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+pergunta: (UFPR 2017 - C. Gerais) Considere duas populações de uma espécie de mamífero. Na população I os animais têm coloração da pelagem clara e habitam ambientes de campo aberto. Na população II eles têm coloração escura e habitam ambientes de floresta densa. O gene F é responsável pela coloração da pelagem nessa espécie de mamífero. O alelo F (completamente dominante) confere coloração escura, e o alelo f (recessivo), coloração clara. Nesse sentido, a seleção natural sobre essas populações é do tipo:
+
+A) 	
+direcional a favor da pelagem escura, o que pode levar à extinção da população I.
+
+B) 	
+disruptiva, desfavorecendo os heterozigotos, o que pode levar à especiação. resposta correta
+
+C) 	
+direcional, favorecendo apenas os homozigotos FF nas duas populações.
+
+D) 	
+estabilizadora, com os heterozigotos (Ff) igualmente adaptados aos dois ambientes.
+
+E) 	
+disruptiva, o que pode levar à extinção de ambas as populações.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+pergunta: (UFPR 2015 - C. Gerais) Numa planície alagada, bastante estável há milhões de anos, existe uma espécie de arbusto tóxico que produz flores com 10 variedades de cores distintas (fenótipos). Sabendo que as cores das flores em questão são determinadas geneticamente, um pesquisador lançou a seguinte pergunta: por que arbustos que produzem flores azuis são mais abundantes que os que produzem flores de outras cores? Para tentar responder a essa pergunta, o pesquisador investigou cinco parâmetros nos arbustos que apresentam esses 10 fenótipos distintos. De acordo com a teoria da seleção natural, qual parâmetro levantado pelo pesquisador é imprescindível para responder à pergunta formulada?
+
+A) 	
+Forma de polinização.
+
+B) 	
+Tempo médio de vida.
+
+C) 	
+Quantidade de toxinas.
+
+D) 	
+Sucesso reprodutivo. resposta correta
+
+E) 	
+Resistência à decomposição.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+pergunta: (UFPR 2013 - C. Gerais) A Seleção Natural é um dos principais fatores responsáveis pela evolução, juntamente com a mutação, a deriva genética e a migração genética. Para que a Seleção Natural ocorra em uma população, é imprescindível que haja:
+
+A) 	
+alteração do meio ambiente, propiciando o favorecimento de alguns indivíduos da população.
+
+B) 	
+diversidade da composição genética dos indivíduos da população. resposta correta
+
+C) 	
+informações genéticas anômalas que produzam doenças quando em homozigose.
+
+D) 	
+disputa entre os indivíduos, com a morte dos menos aptos.
+
+E) 	
+mutação em taxa compatível com as exigências ambientais.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+pergunta: (UNIFESP) De acordo com a teoria da evolução biológica, os seres vivos vêm se modificando
+gradualmente ao longo das gerações, desde o seu surgimento na Terra, em um processo de
+adaptação evolutiva. Segundo essa teoria,
+a) Os indivíduos mais bem adaptados transmitem as características aos descendentes. resposta correta
+b) Ocorre a seleção de características morfológicas adquiridas pelo uso frequente.
+c) A seleção natural apenas elimina aqueles indivíduos que sofreram mutação.
+d) As mutações são dirigidas para genes específicos que proporcionam maior vantagem aos
+seus portadores.
+e) As mutações dirigidas são seguidas da seleção aleatória das mais adaptativas
+
+
+
+
+
+
+
+
+
