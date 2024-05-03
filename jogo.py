@@ -4,6 +4,7 @@ from PIL import Image, ImageTk
 import random
 import pygame
 from playsound import playsound
+# Precisa deixar a música na mesma pasta que o jogo
 
 class Jogo:
     def __init__(self, master):
