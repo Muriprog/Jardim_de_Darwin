@@ -1,0 +1,135 @@
+import tkinter as tk
+from tkinter import messagebox
+from PIL import Image, ImageTk
+import random
+import sqlite3
+import bcrypt
+
+current_user = None
+
+def setup_database():
+    conn = sqlite3.connect('game.db')
+    cursor = conn.cursor()
+    
+    # Criação das tabelas
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT UNIQUE,
+        password TEXT
+    )
+    ''')
+    
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS ranking (
+        user_id INTEGER,
+        score INTEGER,
+        FOREIGN KEY(user_id) REFERENCES users(id)
+    )
+    ''')
+    
+    conn.commit()
+    conn.close()
+
+setup_database()
+
+def register(username, password):
+    conn = sqlite3.connect('game.db')
+    cursor = conn.cursor()
+    
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+    
+    try:
+        cursor.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, hashed_password))
+        conn.commit()
+        messagebox.showinfo("Sucesso", "Usuário cadastrado com sucesso!")
+    except sqlite3.IntegrityError:
+        messagebox.showerror("Erro", "Usuário já existe!")
+    finally:
+        conn.close()
+
+def login(username, password):
+    global current_user
+    conn = sqlite3.connect('game.db')
+    cursor = conn.cursor()
+    
+    cursor.execute('SELECT id, password FROM users WHERE username = ?', (username,))
+    result = cursor.fetchone()
+    
+    if result and bcrypt.checkpw(password.encode('utf-8'), result[1]):
+        current_user = result[0]
+        messagebox.showinfo("Sucesso", "Login bem-sucedido!")
+        start_game()
+    else:
+        messagebox.showerror("Erro", "Usuário ou senha incorretos.")
+    
+    conn.close()
+
+def update_score(user_id, points):
+    conn = sqlite3.connect('game.db')
+    cursor = conn.cursor()
+    
+    cursor.execute('SELECT score FROM ranking WHERE user_id = ?', (user_id,))
+    result = cursor.fetchone()
+    
+    if result:
+        cursor.execute('UPDATE ranking SET score = score + ? WHERE user_id = ?', (points, user_id))
+    else:
+        cursor.execute('INSERT INTO ranking (user_id, score) VALUES (?, ?)', (user_id, points))
+    
+    conn.commit()
+    conn.close()
+
+def get_ranking():
+    conn = sqlite3.connect('game.db')
+    cursor = conn.cursor()
+    
+    cursor.execute('''
+    SELECT users.username, ranking.score FROM ranking
+    JOIN users ON ranking.user_id = users.id
+    ORDER BY ranking.score DESC
+    ''')
+    
+    ranking = cursor.fetchall()
+    conn.close()
+    return ranking
+
+def show_ranking():
+    ranking_window = tk.Toplevel()
+    ranking_window.title("Ranking dos Jogadores")
+    
+    ranking = get_ranking()
+    
+    tk.Label(ranking_window, text="Ranking dos Jogadores", font=("Arial", 16)).pack(pady=10)
+    
+    for index, (username, score) in enumerate(ranking, start=1):
+        tk.Label(ranking_window, text=f"{index}. {username} - {score} pontos", font=("Arial", 14)).pack(pady=5)
+
+def create_login_screen():
+    root = tk.Tk()
+    root.title("Tela de Login")
+    
+    tk.Label(root, text="Nome de Usuário").grid(row=0, column=0)
+    tk.Label(root, text="Senha").grid(row=1, column=0)
+    
+    username_entry = tk.Entry(root)
+    password_entry = tk.Entry(root, show="*")
+    
+    username_entry.grid(row=0, column=1)
+    password_entry.grid(row=1, column=1)
+    
+    def handle_login():
+        username = username_entry.get()
+        password = password_entry.get()
+        login(username, password)
+    
+    def handle_register():
+        username = username_entry.get()
+        password = password_entry.get()
+        register(username, password)
+    
+    tk.Button(root, text="Login", command=handle_login).grid(row=2, column=0)
+    tk.Button(root, text="Cadastrar", command=handle_register).grid(row=2, column=1)
+    tk.Button(root, text="Ranking", command=show_ranking).grid(row=3, column=0, columnspan=2)  # Botão de Ranking
+    
+    root.mainloop()
