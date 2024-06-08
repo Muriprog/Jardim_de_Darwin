@@ -1,0 +1,28 @@
+import sqlite3
+import bcrypt
+
+def setup_database():
+    conn = sqlite3.connect('game.db')
+    cursor = conn.cursor()
+    
+    # Criação das tabelas
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT UNIQUE,
+        password TEXT
+    )
+    ''')
+    
+    cursor.execute('''
+    CREATE TABLE IF NOT EXISTS ranking (
+        user_id INTEGER,
+        score INTEGER,
+        FOREIGN KEY(user_id) REFERENCES users(id)
+    )
+    ''')
+    
+    conn.commit()
+    conn.close()
+
+setup_database()
