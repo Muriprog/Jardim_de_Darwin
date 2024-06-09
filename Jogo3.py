@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 from PIL import Image, ImageTk
 import random
+import pygame
 
 class QuizApp:
     def __init__(self, master, jogo):
@@ -102,6 +103,10 @@ class Jogo:
         self.master = master
         self.master.title("Jogo e Quiz")
         self.master.state('zoomed')  # Define a janela para abrir maximizada
+
+        self.master = master
+        self.master.title("Jogo e Quiz")
+        self.master.state('zoomed')  # Define a janela para abrir maximizada
         
         self.canvas = tk.Canvas(self.master, bg="green")
         self.canvas.pack(fill=tk.BOTH, expand=True)
@@ -118,6 +123,11 @@ class Jogo:
         self.canvas.bind("<Down>", self.mover_baixo)
         self.canvas.bind("<Left>", self.mover_esquerda)
         self.canvas.bind("<Right>", self.mover_direita)
+
+        self.canvas.bind("w", self.mover_cima)
+        self.canvas.bind("s", self.mover_baixo)
+        self.canvas.bind("a", self.mover_esquerda)
+        self.canvas.bind("d", self.mover_direita)
 
         self.master.bind("<Configure>", self.on_resize)
 
@@ -293,10 +303,36 @@ class Jogo:
     def on_resize(self, event):
         self.desenhar_grama()
 
+    def aumentar_volume(self):
+        if self.volume_atual < 1.0:
+            self.volume_atual += 0.1  # Aumenta o volume em 10%
+            pygame.mixer.music.set_volume(self.volume_atual)
+            self.atualizar_label_volume()
+
+    def diminuir_volume(self):
+        if self.volume_atual > 0.0:
+            self.volume_atual -= 0.1  # Diminui o volume em 10%
+            pygame.mixer.music.set_volume(self.volume_atual)
+            self.atualizar_label_volume()
+
+    def atualizar_label_volume(self):
+        volume_percentual = int(self.volume_atual * 100)
+        self.label_volume.config(text="Volume: {}%".format(volume_percentual))
+
 def main():
+    pygame.init()
+    pygame.mixer.music.load('lofi.mp3')
+
     root = tk.Tk()
     jogo = Jogo(root)
+
+    pygame.mixer.music.set_volume(0.075)  # Defina o volume para 50%
+
+    pygame.mixer.music.play(loops=-1)  # Reproduzir a música em loop
+
     root.mainloop()
+
+    pygame.mixer.music.stop()
 
 if __name__ == "__main__":
     main()
