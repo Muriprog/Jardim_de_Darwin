@@ -58,7 +58,7 @@ class QuizApp:
         self.botao_responder = tk.Button(self.frame, text="Responder", command=self.responder_pergunta, bg="#4CAF50", fg="white")
         self.botao_responder.pack(pady=5)
 
-        self.botao_nova_rodada = tk.Button(self.frame, text="Nova Rodada", command=self.jogo.reiniciar_jogo, bg="#007BFF", fg="white")
+        self.botao_nova_rodada = tk.Button(self.frame, text="Nova Rodada", command=self.jogo.reiniciar_jogo_completo, bg="#007BFF", fg="white")
         self.botao_nova_rodada.pack(pady=5)
 
         self.mostrar_nova_rodada()
@@ -87,7 +87,7 @@ class QuizApp:
             messagebox.showinfo("Resposta Correta", "Parabéns! Sua resposta está correta!")
         else:
             messagebox.showerror("Resposta Incorreta", f"A resposta correta era: {resposta_correta}")
-            self.jogo.reiniciar_jogo()  # Reiniciar o jogo se a resposta estiver incorreta
+            self.jogo.reiniciar_jogo_completo()  # Reiniciar o jogo se a resposta estiver incorreta
 
         self.current_question_index += 1
         self.mostrar_pergunta_atual()
@@ -109,6 +109,7 @@ class Jogo:
         self.pontuacao = 0
         self.quiz_aberto = False
         self.imortal = False  # Variável para controlar o estado de imortalidade do tentilhão
+        self.perdeu = False  # Variável para controlar se a mensagem de perda já foi exibida
 
         self.botao_iniciar = tk.Button(self.master, text="INICIAR", command=self.iniciar_jogo, bg="#007BFF", fg="white", font=("Arial", 24))
         self.botao_iniciar.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
@@ -134,13 +135,23 @@ class Jogo:
         self.desenhar_grama()
         self.desenhar_animais()
 
+    def reiniciar_jogo_completo(self):
+        # Destruir a janela atual e criar uma nova instância da classe Jogo
+        self.master.destroy()
+        root = tk.Tk()
+        novo_jogo = Jogo(root)
+        root.mainloop()
+
     def reiniciar_jogo(self):
         self.canvas.delete("all")
         self.pontuacao = 0  # Reinicia a pontuação
         self.quiz_aberto = False
         self.imortal = False  # Desativa a imortalidade
-        self.desenhar_grama()
-        self.desenhar_animais()
+        self.mostrar_botao_iniciar()  # Volta ao botão INICIAR
+
+    def mostrar_botao_iniciar(self):
+        self.botao_iniciar = tk.Button(self.master, text="INICIAR", command=self.iniciar_jogo, bg="#007BFF", fg="white", font=("Arial", 24))
+        self.botao_iniciar.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
     def iniciar_nova_fase(self):
         self.quiz_aberto = False
@@ -148,16 +159,13 @@ class Jogo:
         self.desenhar_animais()
         self.ativar_imortalidade()  # Ativa a imortalidade do tentilhão ao começar uma fase
 
-    def desenhar_grama(self):
+    def desenhar_grama(self, cor_escura="#006400", cor_clara="#008000"):
         self.canvas.delete("grama")
         canvas_width = self.canvas.winfo_width()
         canvas_height = self.canvas.winfo_height()
         for y in range(0, canvas_height, 10):
             for x in range(0, canvas_width, 10):
-                if random.random() < 0.5:
-                    cor = "#006400"  # Verde escuro
-                else:
-                    cor = "#008000"  # Verde claro
+                cor = cor_escura if random.random() < 0.5 else cor_clara
                 self.canvas.create_rectangle(x, y, x+10, y+10, fill=cor, outline="", tags="grama")
 
     def desenhar_animais(self):
@@ -175,19 +183,18 @@ class Jogo:
         self.insetos = []
         self.besouros = []
         for _ in range(5):
-            x, y = random.randint(100, 700), random.randint(0, 550)
+            x, y = random.randint(100, 300), random.randint(0, 550)  # Ajuste aqui para o nascer do tentilhão
             inseto_id = self.canvas.create_image(x, y, anchor=tk.NW, image=self.inseto_img)
             self.insetos.append({"id": inseto_id, "dx": random.choice([-1, 1]), "dy": random.choice([-1, 1])})
 
+        self.besouro_verde_id = random.choice(self.insetos)["id"]  # ID do besouro verde
         for _ in range(5):
-            x, y = random.randint(100, 700), random.randint(0, 550)
-            while abs(x - self.tentilhao_posicao[0]) < 100 and abs(y - self.tentilhao_posicao[1]) < 100: # Garantir que o besouro não nasce perto do tentilhão
-                x, y = random.randint(100, 700), random.randint(0, 550)
+            x, y = random.randint(800, 1000), random.randint(0, 550)  # Ajuste aqui para o nascer do besouro
             besouro_id = self.canvas.create_image(x, y, anchor=tk.NW, image=self.besouro_img)
             self.besouros.append({"id": besouro_id, "dx": random.choice([-1, 1]), "dy": random.choice([-1, 1])})
 
-        self.passaro_id = self.canvas.create_image(400, 300, anchor=tk.NW, image=self.passaro)
-        self.tentilhao_posicao = (400, 300)
+        self.passaro_id = self.canvas.create_image(200, 300, anchor=tk.NW, image=self.passaro)  # Ajuste aqui para o nascer do tentilhão
+        self.tentilhao_posicao = (200, 300)  # Ajuste aqui para o nascer do tentilhão
         self.move_animais()
 
     def ativar_imortalidade(self):
@@ -243,7 +250,8 @@ class Jogo:
         for besouro in self.besouros:
             besouro_coords = self.canvas.bbox(besouro["id"])
             if self.is_collision(passaro_coords, besouro_coords):
-                if not self.quiz_aberto:  # Verifica se o quiz não está aberto antes de mostrar o fim de jogo
+                if not self.quiz_aberto and not self.perdeu:  # Verifica se o quiz não está aberto e se a mensagem de perda não foi exibida
+                    self.perdeu = True
                     messagebox.showinfo("Fim de Jogo", "Você perdeu o jogo!")
                     self.reiniciar_jogo()
 
@@ -258,12 +266,12 @@ class Jogo:
                 inseto["dx"] = -inseto["dx"]
             if coords[1] <= 0 or coords[3] >= self.canvas.winfo_height():
                 inseto["dy"] = -inseto["dy"] 
-            for besouro in self.besouros:
-                 self.canvas.move(besouro["id"], besouro["dx"], besouro["dy"])
-            coords = self.canvas.bbox(besouro["id"])
-            if coords[0] <= 0 or coords[2] >= self.canvas.winfo_width():
+        for besouro in self.besouros:
+             self.canvas.move(besouro["id"], besouro["dx"], besouro["dy"])
+             coords = self.canvas.bbox(besouro["id"])
+             if coords[0] <= 0 or coords[2] >= self.canvas.winfo_width():
                 besouro["dx"] = -besouro["dx"]
-            if coords[1] <= 0 or coords[3] >= self.canvas.winfo_height():
+             if coords[1] <= 0 or coords[3] >= self.canvas.winfo_height():
                 besouro["dy"] = -besouro["dy"]
 
         self.verificar_colisao()
@@ -276,6 +284,7 @@ class Jogo:
 
     def mostrar_segunda_fase(self):
         self.canvas.create_text(self.canvas.winfo_width()//2, self.canvas.winfo_height()//2, text="SEGUNDA FASE", font=("Arial", 30), fill="white", tags="segunda_fase")
+        self.desenhar_grama("#000090", "#000050")
         self.master.after(2000, self.remover_texto_e_reiniciar_jogo)
 
     def remover_texto_e_reiniciar_jogo(self):
