@@ -34,6 +34,8 @@ def setup_database():
 
 setup_database()
 
+
+
 def register(username, password):
     conn = sqlite3.connect('game.db')
     cursor = conn.cursor()
@@ -65,6 +67,8 @@ def login(username, password):
         messagebox.showerror("Erro", "Usuário ou senha incorretos.")
     
     conn.close()
+
+    
 
 def start_game():
     global root
@@ -131,6 +135,8 @@ class QuizApp:
         self.frame = tk.Frame(self.master, bg="white")
         self.frame.pack()
 
+        
+
         self.categories = {
             "Pergunta 1": {
                 "pergunta": "Assinale a alternativa que contém uma informação que NÃO é sustentada pela Teoria Evolutiva por Seleção Natural",
@@ -161,6 +167,16 @@ class QuizApp:
                     "IV - É provável que a frequência de heterozigose seja semelhante na população brasileira e na população sérvia."
                 ],
                 "resposta": "III - Os Bálcãs exemplificam bem que a migração aumenta a variabilidade genética."
+            },
+            "Pergunta 4": {
+                "pergunta": "(URCA 2017/1) A seleção natural das espécies proposta por Charles Darwin no século XIX tem como base:",
+                "opcoes": [
+                    "A) A transmissão de caracteres adquiridos pelos progenitores aos seus descendentes.",
+                    "B) Mutações que degeneram os mais fracos e com isso esses são eliminados.",
+                    "C) Eventos catastróficos que dizimam populações inteiras permitindo o surgimento de novas espécies.",
+                    "D) A seleção dos mais aptos a um ambiente e a transmissão dessas características aos seus descendentes."
+                ],
+                "resposta": "D) A seleção dos mais aptos a um ambiente e a transmissão dessas características aos seus descendentes."
             }
         }
 
@@ -231,6 +247,7 @@ class Jogo:
         self.canvas = tk.Canvas(self.master, bg="green")
         self.canvas.pack(fill=tk.BOTH, expand=True)
 
+        self.tempo_restante = 60
         self.pontuacao = 0
         self.quiz_aberto = False
         self.imortal = False  # Variável para controlar o estado de imortalidade do tentilhão
@@ -263,10 +280,12 @@ class Jogo:
         self.canvas.delete("all")
         self.desenhar_grama()
         self.desenhar_animais()
+        self.atualizar_tempo()
 
     def reiniciar_jogo(self):
         self.canvas.delete("all")
         self.pontuacao = 0  # Reinicia a pontuação
+        self.tempo_restante = 60
         self.quiz_aberto = False
         self.imortal = False  # Desativa a imortalidade
         self.desenhar_grama()
@@ -303,6 +322,10 @@ class Jogo:
                 else:
                     cor = "#008000"  # Verde claro
                 self.canvas.create_rectangle(x, y, x+10, y+10, fill=cor, outline="", tags="grama")
+
+        # Mostrar pontuação e tempo
+        self.pontuacao_label = self.canvas.create_text(50, 50, anchor=tk.NW, text="Pontuação: {}".format(self.pontuacao), fill="white", font=("Arial", 15))
+        self.tempo_label = self.canvas.create_text(canvas_width - 50, 50, anchor=tk.NE, text="Tempo: {}".format(self.tempo_restante), fill="white", font=("Arial", 15))
 
     def desenhar_animais(self):
         self.imagem_inseto = Image.open("insetos.png").resize((60, 60))
@@ -438,6 +461,15 @@ class Jogo:
     def on_resize(self, event):
         self.desenhar_grama()
 
+    def atualizar_tempo(self):
+        if self.tempo_restante > 0:
+            self.tempo_restante -= 1
+            self.canvas.itemconfig(self.tempo_label, text="Tempo: {}".format(self.tempo_restante))
+            self.master.after(1000, self.atualizar_tempo)
+        else:
+            messagebox.showinfo("Tempo Esgotado", f"Fim de jogo! Sua pontuação final: {self.pontuacao}\nObrigado por jogar!")
+            self.master.destroy()
+
     def aumentar_volume(self):
         if self.volume_atual < 1.0:
             self.volume_atual += 0.1  # Aumenta o volume em 10%
@@ -468,6 +500,12 @@ def main():
     root.mainloop()
 
     pygame.mixer.music.stop()
+
+def main():
+    root = tk.Tk()
+    jogo = Jogo(root)
+    root.mainloop()
+
 
 if __name__ == "__main__":
     create_login_screen()
